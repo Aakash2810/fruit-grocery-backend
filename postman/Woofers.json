@@ -1,0 +1,184 @@
+{
+  "info": {
+    "name": "Woofers Fruit Grocery - Cart & Checkout",
+    "_postman_id": "woofers-cart-checkout-001",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Register User",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/auth/register",
+          "host": ["{{baseUrl}}"],
+          "path": ["auth", "register"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"john\",\n  \"password\": \"password123\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Login User",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.environment.set(\"token\", pm.response.text());"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/auth/login",
+          "host": ["{{baseUrl}}"],
+          "path": ["auth", "login"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"john\",\n  \"password\": \"password123\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Add Fruit - Apple",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/fruits",
+          "host": ["{{baseUrl}}"],
+          "path": ["fruits"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Apple\",\n  \"price\": 120,\n  \"availableQuantity\": 50\n}"
+        }
+      }
+    },
+    {
+      "name": "Add Fruit - Banana",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/fruits",
+          "host": ["{{baseUrl}}"],
+          "path": ["fruits"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Banana\",\n  \"price\": 60,\n  \"availableQuantity\": 100\n}"
+        }
+      }
+    },
+    {
+      "name": "List Fruits",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/fruits",
+          "host": ["{{baseUrl}}"],
+          "path": ["fruits"]
+        }
+      }
+    },
+    {
+      "name": "Add Apple to Cart",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/cart/items?fruitId=1&quantity=2",
+          "host": ["{{baseUrl}}"],
+          "path": ["cart", "items"],
+          "query": [
+            { "key": "fruitId", "value": "1" },
+            { "key": "quantity", "value": "2" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Add Banana to Cart",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/cart/items?fruitId=2&quantity=3",
+          "host": ["{{baseUrl}}"],
+          "path": ["cart", "items"],
+          "query": [
+            { "key": "fruitId", "value": "2" },
+            { "key": "quantity", "value": "3" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "View Cart",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/cart",
+          "host": ["{{baseUrl}}"],
+          "path": ["cart"]
+        }
+      }
+    },
+    {
+      "name": "Checkout Order",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/orders/checkout?pricingType=REGULAR",
+          "host": ["{{baseUrl}}"],
+          "path": ["orders", "checkout"],
+          "query": [
+            { "key": "pricingType", "value": "REGULAR" }
+          ]
+        }
+      }
+    }
+  ]
+}
