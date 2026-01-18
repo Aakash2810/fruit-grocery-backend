@@ -1,7 +1,7 @@
 {
   "info": {
-    "name": "Woofers Fruit Grocery - Cart & Checkout",
-    "_postman_id": "woofers-cart-checkout-001",
+    "name": "Woofers Fruit Grocery - Cart Full Flow",
+    "_postman_id": "woofers-cart-full-002",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -153,6 +153,51 @@
       "name": "View Cart",
       "request": {
         "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/cart",
+          "host": ["{{baseUrl}}"],
+          "path": ["cart"]
+        }
+      }
+    },
+    {
+      "name": "Update Apple Quantity",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/cart/items/1?quantity=5",
+          "host": ["{{baseUrl}}"],
+          "path": ["cart", "items", "1"],
+          "query": [
+            { "key": "quantity", "value": "5" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Remove Banana from Cart",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/cart/items/2",
+          "host": ["{{baseUrl}}"],
+          "path": ["cart", "items", "2"]
+        }
+      }
+    },
+    {
+      "name": "Clear Cart",
+      "request": {
+        "method": "DELETE",
         "header": [
           { "key": "Authorization", "value": "Bearer {{token}}" }
         ],

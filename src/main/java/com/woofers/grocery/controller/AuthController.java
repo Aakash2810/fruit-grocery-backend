@@ -1,5 +1,6 @@
 package com.woofers.grocery.controller;
 
+import com.woofers.grocery.dto.UserDto;
 import com.woofers.grocery.entity.User;
 import com.woofers.grocery.security.JwtUtil;
 import com.woofers.grocery.service.UserService;
@@ -24,8 +25,14 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public User register(@RequestBody User user) {
-        return userService.register(user);
+    public UserDto register(@RequestBody User user) {
+        User savedUser =  userService.register(user);
+        return new UserDto(
+        		savedUser.getId(),
+        		savedUser.getUsername(),
+        		savedUser.getRole()
+        );
+        
     }
 
     @PostMapping("/login")

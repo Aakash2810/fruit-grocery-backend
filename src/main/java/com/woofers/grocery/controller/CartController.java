@@ -26,4 +26,24 @@ public class CartController {
     public Cart view(Authentication authentication) {
         return service.getCart(authentication.getName());
     }
+    
+    @DeleteMapping("/items/{fruitId}")
+    public Cart removeItem(@PathVariable Long fruitId,
+                           Authentication authentication) {
+        return service.removeItem(authentication.getName(), fruitId);
+    }
+    
+    @PutMapping("/items/{fruitId}")
+    public Cart updateQuantity(@PathVariable Long fruitId,
+                               @RequestParam int quantity,
+                               Authentication authentication) {
+        return service.updateQuantity(authentication.getName(), fruitId, quantity);
+    }
+    
+    @DeleteMapping
+    public void clearCart(Authentication authentication) {
+        service.clearCart(authentication.getName());
+    }
+
+
 }
