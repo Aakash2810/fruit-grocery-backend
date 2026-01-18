@@ -3,8 +3,9 @@
 Woofers is a backend service for a fruit grocery platform.
 The application focuses on secure authentication, inventory management, and a cart-based order checkout flow.
 
-This project is intended to demonstrate practical backend design using Java and Spring Boot, covering authentication, transactional consistency, and clean architecture.
+This project is intended to demonstrate practical backend design using Java and Spring Boot, with an emphasis on authentication, transactional consistency, and clean architecture.
 
+---
 
 ## Features
 
@@ -12,10 +13,15 @@ This project is intended to demonstrate practical backend design using Java and 
 - Secure REST APIs with Spring Security
 - Fruit inventory management
 - Cart-based ordering supporting multiple fruits per order
+- Editable cart functionality:
+  - Add items to cart
+  - Update item quantity
+  - Remove individual items
+  - Clear entire cart
 - Transactional checkout to ensure inventory consistency
 - Optimistic locking to prevent overselling
 - Pricing handled using Strategy and Factory design patterns
-- API documentation using Swagger (OpenAPI)
+- Sensitive fields (e.g. passwords) are never exposed in API responses
 
 ---
 
@@ -28,9 +34,8 @@ This project is intended to demonstrate practical backend design using Java and 
 - MySQL
 - JWT (JJWT)
 - Maven
-- Swagger (springdoc-openapi)
 
-
+---
 
 ## Application Design
 
@@ -40,30 +45,35 @@ Controller → Service → Repository → Database
 
 ### Order Flow
 
-User → Cart → Add Fruits → Checkout → Order
+User → Cart → Add / Modify Items → Checkout → Order
 
-- Users can add multiple fruits to a cart
+- Users can freely modify their cart until checkout
 - Inventory is validated and deducted only during checkout
 - Order creation and inventory updates are handled within a single transaction
+- Cart data is cleared after successful checkout
 
+---
 
 ## Domain Model
 
 - User – represents an authenticated customer
 - Fruit – represents an inventory item with available quantity
-- Cart – temporary container holding user selected fruits
+- Cart – temporary container holding user-selected fruits
 - CartItem – fruit and quantity stored in the cart
 - Order – confirmed purchase created after checkout
 - OrderItem – individual items associated with an order
 
+---
 
 ## Security
 
 - Stateless authentication using JWT
 - Passwords stored using BCrypt hashing
-- Swagger and authentication endpoints are publicly accessible
+- Password field is write-only and never returned in API responses
+- Authentication endpoints are publicly accessible
 - All business APIs require authentication
 
+---
 
 ## Running the Application
 
@@ -77,46 +87,3 @@ User → Cart → Add Fruits → Checkout → Order
 
 ```sql
 CREATE DATABASE woofers;
-```
-
-### Application Configuration
-
-application.yml
-
-```yaml
-spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/woofers
-    username: root
-    password: root
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-```
-
-### Build and Run
-
-```bash
-mvn clean install
-mvn spring-boot:run
-```
-
-## Design Patterns Used
-
-- Factory Pattern for selecting pricing strategies
-- Transaction management for checkout flow
-- Optimistic locking for inventory consistency
-
-
-## Further Improvements
-
-- Role-based access control (admin and customer roles)
-- Order history APIs
-- Refresh token support
-- Pagination and filtering for inventory
-- Integration and unit test coverage
-
-
-
-
