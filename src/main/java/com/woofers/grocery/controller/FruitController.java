@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/fruits")
 public class FruitController {
 
     private final FruitService service;
@@ -16,13 +15,31 @@ public class FruitController {
         this.service = service;
     }
 
-    @PostMapping
+   
+    @GetMapping("/fruits")
+    public List<Fruit> list() {
+        return service.getAll();
+    }
+
+   
+
+    @PostMapping("/admin/fruits")
     public Fruit add(@RequestBody Fruit fruit) {
         return service.addFruit(fruit);
     }
 
-    @GetMapping
-    public List<Fruit> list() {
+    @PutMapping("/admin/fruits/{id}")
+    public Fruit update(@PathVariable Long id, @RequestBody Fruit fruit) {
+        return service.updateFruit(id, fruit);
+    }
+
+    @DeleteMapping("/admin/fruits/{id}")
+    public void delete(@PathVariable Long id) {
+        service.deleteFruit(id);
+    }
+
+    @GetMapping("/admin/fruits")
+    public List<Fruit> listAllForAdmin() {
         return service.getAll();
     }
 }

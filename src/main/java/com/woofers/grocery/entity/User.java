@@ -2,7 +2,10 @@ package com.woofers.grocery.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -11,14 +14,16 @@ import jakarta.persistence.Table;
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true)
     private String username;
 
     private String password;
-    private String role;
+    
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     public Long getId() {
         return id;
@@ -39,16 +44,17 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public void setRole(String role) {
+    
+    public void setRole(Role role) {
         this.role = role;
     }
 
+   
     public String getPassword() {
         return password;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 }

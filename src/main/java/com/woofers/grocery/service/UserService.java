@@ -1,5 +1,6 @@
 package com.woofers.grocery.service;
 
+import com.woofers.grocery.entity.Role;
 import com.woofers.grocery.entity.User;
 import com.woofers.grocery.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,7 +19,11 @@ public class UserService {
 
     public User register(User user) {
         user.setPassword(encoder.encode(user.getPassword()));
-        user.setRole("CUSTOMER");
+        user.setRole(Role.CUSTOMER);
         return repository.save(user);
+    }
+    
+    public User getUserByUsername(String username) {
+    	return repository.findByUsername(username).get();
     }
 }

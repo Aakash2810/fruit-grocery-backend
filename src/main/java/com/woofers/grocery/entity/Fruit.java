@@ -1,5 +1,6 @@
 package com.woofers.grocery.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -15,6 +16,9 @@ public class Fruit {
     private String name;
     private double price;
     private int availableQuantity;
+    @Column(name = "image_url", columnDefinition = "TEXT")
+    private String imageUrl;
+  
 
     @Version
     private int version;
@@ -35,6 +39,10 @@ public class Fruit {
         return price;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -49,5 +57,9 @@ public class Fruit {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
